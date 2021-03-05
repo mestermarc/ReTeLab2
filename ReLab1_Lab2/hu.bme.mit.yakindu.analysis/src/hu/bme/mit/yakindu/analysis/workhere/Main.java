@@ -1,10 +1,12 @@
 package hu.bme.mit.yakindu.analysis.workhere;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
 import org.yakindu.sct.model.sgraph.State;
 import org.yakindu.sct.model.sgraph.Statechart;
+import org.yakindu.sct.model.sgraph.Transition;
 
 import hu.bme.mit.model2gml.Model2GML;
 import hu.bme.mit.yakindu.analysis.modelmanager.ModelManager;
@@ -29,7 +31,21 @@ public class Main {
 			EObject content = iterator.next();
 			if(content instanceof State) {
 				State state = (State) content;
-				System.out.println(state.getName());
+				//System.out.println(state.getName());
+				EList<Transition> next_state_trans = (state.getOutgoingTransitions());
+				if (next_state_trans.isEmpty()) {
+					System.out.println(state.getName()+" is a trap state!");
+				}else {
+					next_state_trans.forEach((Transition temp)->{
+						String target_name = temp.getTarget().getName();
+						if (target_name==null) {
+							String name_advice="from_"+state.getName()+"_"+temp.getSpecification();
+							System.out.println("Nincs neve egy állapotnak, a következő nevet javaslom:"+name_advice);
+							temp.getTarget().setName(name_advice);
+						}
+						System.out.println(state.getName()+" -> "+target_name);
+					});
+				}
 			}
 		}
 		
