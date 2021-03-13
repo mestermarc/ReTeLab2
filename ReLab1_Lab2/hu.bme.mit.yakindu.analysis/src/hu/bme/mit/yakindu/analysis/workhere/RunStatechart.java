@@ -20,37 +20,36 @@ public class RunStatechart {
 		s.enter();
 		s.runCycle();
 		
-        // 3.5. feladat:
         BufferedReader reader = new BufferedReader( 
             new InputStreamReader(System.in)); 
         String line = reader.readLine();
         
         while((line.equals("exit")) == false) {
         	switch(line) {
-        	case ("start"):
-        		s.raiseStart();
-        		s.runCycle();
-        		break;
-        	case ("white"):
-        		s.raiseWhite();
-    			s.runCycle();
-        		break;
-        	case ("black"):
-        		s.raiseBlack();
-    			s.runCycle();
-        		break;
-        	default:
-        		System.out.println("Invalid input");
-        	}
-        print(s);
-        line = reader.readLine();
+			case ("start"):
+				s.raiseStart();
+				s.runCycle();
+				break;
+			case ("feher"):
+				s.raiseFeher();
+				s.runCycle();
+				break;
+			case ("fekete"):
+				s.raiseFekete();
+				s.runCycle();
+				break;
+			default:
+				System.out.println("Invalid input");
+			}
+	print(s);
+	line = reader.readLine();
      }
      print(s);
      System.exit(0);
         
 	}
-	public static void print(IExampleStatemachine s) {
-		System.out.println("WhiteTime = " + s.getSCInterface().getWhiteTime());
-		System.out.println("BlackTime = " + s.getSCInterface().getBlackTime());
+	public static void print(IExampleStatemachine s){
+		System.out.println("W = " + s.getSCInterface().getWhiteTime());
+		System.out.println("B = " + s.getSCInterface().getBlackTime());
 	}
 }
